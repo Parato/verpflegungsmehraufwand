@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verpflegungsmehraufwand Präsentation</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        window.initIcons = () => {
+            if (typeof lucide !== 'undefined' && lucide.createIcons) {
+                lucide.createIcons();
+            }
+        };
+    </script>
+    <style>
+        #app { font-family: 'Inter', sans-serif; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-slate-900 flex items-center justify-center h-screen w-screen overflow-hidden p-4">
+
+    <div id="app" class="w-[95vw] h-[90vh] bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col relative">
+        
+        <div id="slide-container" class="flex-grow flex flex-col overflow-hidden relative">
+            <!-- Content -->
+        </div>
+
+        <div class="bg-slate-50 px-8 py-4 flex-shrink-0 flex justify-between items-center border-t border-slate-200 z-10 h-20">
+            <div id="slide-info" class="text-slate-500 text-lg font-mono font-bold"></div>
+            <div class="flex space-x-4">
+                <button id="prev-button" onclick="prevSlide()"
+                    class="p-3 rounded-full bg-white border border-slate-300 hover:bg-slate-200 disabled:opacity-30 disabled:hover:bg-white transition-colors shadow-sm">
+                    <svg class="lucide" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button id="next-button" onclick="nextSlide()"
+                    class="p-3 rounded-full bg-white border border-slate-300 hover:bg-slate-200 disabled:opacity-30 disabled:hover:bg-white transition-colors shadow-sm">
+                    <svg class="lucide" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+
+        const slides = [
+            // Slide 1: Title & Overview
+            {
+                title: "Verpflegungsmehraufwand",
+                subtitle: "Reisekosten Inland & Ausland (§ 9 Abs. 4a EStG)",
+                content: `
+                    <div class="flex flex-col items-center justify-center h-full pb-8">
+                        <div class="bg-gradient-to-br from-blue-100 to-indigo-100 p-10 rounded-full shadow-lg mb-10">
+                            <div class="flex">
+                                <svg data-lucide="map" size="80" class="text-blue-600 mr-4"></svg>
+                                <svg data-lucide="plane" size="80" class="text-indigo-600"></svg>
+                            </div>
+                        </div>
+                        <div class="text-center max-w-5xl">
+                            <p class="text-4xl font-light mb-10 text-slate-700">Steuerlich sicher durch die Reisekosten-Gestaltung</p>
+                            <div class="grid grid-cols-2 gap-6 text-left">
+                                <ul class="bg-slate-50 p-8 rounded-xl shadow-sm border border-slate-100 space-y-4 text-2xl">
+                                    <li class="font-bold text-slate-400 uppercase text-sm tracking-wider mb-2">Grundlagen</li>
+                                    <li class="flex items-center"><svg data-lucide="check-circle" size="28" class="text-green-500 mr-4"></svg> Voraussetzung: Auswärtstätigkeit</li>
+                                    <li class="flex items-center"><svg data-lucide="check-circle" size="28" class="text-green-500 mr-4"></svg> Die Pauschalen (Inland)</li>
+                                    <li class="flex items-center"><svg data-lucide="check-circle" size="28" class="text-green-500 mr-4"></svg> <strong></strong> Mahlzeitenkürzung</li>
+                                </ul>
+                                <ul class="bg-blue-50 p-8 rounded-xl shadow-sm border border-blue-100 space-y-4 text-2xl">
+                                    <li class="font-bold text-blue-400 uppercase text-sm tracking-wider mb-2">Vertiefung</li>
+                                    <li class="flex items-center"><svg data-lucide="globe" size="28" class="text-indigo-500 mr-4"></svg> Regeln im Ausland</li>
+                                    <li class="flex items-center"><svg data-lucide="clock" size="28" class="text-indigo-500 mr-4"></svg> 3-Monats-Frist</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+
+            // Slide 2: Die Pauschalen INLAND (Basis)
+            {
+                title: "Die Pauschalen (Inland)",
+                subtitle: "Die festen Werte für Deutschland",
+                content: `
+                    <div class="grid grid-cols-2 gap-8 h-full pb-4">
+                        <!-- Card 1 -->
+                        <div class="bg-blue-50 p-8 rounded-2xl border-l-8 border-blue-500 shadow-md flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center mb-4">
+                                    <div class="p-3 bg-white rounded-full mr-4 shadow-sm"><svg data-lucide="clock" class="text-blue-600" size="36"></svg></div>
+                                    <h3 class="text-3xl font-bold text-slate-800">Der "Kleine" Tag</h3>
+                                </div>
+                                <ul class="list-disc ml-6 space-y-3 text-xl text-slate-700">
+                                    <li>An- und Abreisetage <br><span class="text-blue-700 font-bold text-lg">(nur bei Übernachtung!)</span></li>
+                                    <li>Abwesenheit > 8 Stunden <br><span class="text-slate-500 text-lg">(ohne Übernachtung)</span></li>
+                                </ul>
+                            </div>
+                            <div class="text-7xl font-bold text-blue-700 text-right">14 €</div>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="bg-green-50 p-8 rounded-2xl border-l-8 border-green-500 shadow-md flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center mb-4">
+                                    <div class="p-3 bg-white rounded-full mr-4 shadow-sm"><svg data-lucide="calendar" class="text-green-600" size="36"></svg></div>
+                                    <h3 class="text-3xl font-bold text-slate-800">Der "Volle" Tag</h3>
+                                </div>
+                                <ul class="list-disc ml-6 space-y-3 text-xl text-slate-700">
+                                    <li>Abwesenheit von vollen 24 Std.</li>
+                                    <li>Zwischentage bei mehrtägigen Reisen</li>
+                                </ul>
+                            </div>
+                            <div class="text-7xl font-bold text-green-700 text-right">28 €</div>
+                        </div>
+                        
+                        <div class="col-span-2 bg-yellow-50 border border-yellow-200 rounded-lg p-4 flex items-center justify-center text-yellow-900 text-lg">
+                            <svg data-lucide="alert-triangle" class="mr-3" size="24"></svg>
+                            <span><strong>Grundsatz:</strong> Es gelten immer Pauschalen. Echte Essensbelege sind steuerlich tabu!</span>
+                        </div>
+                    </div>
+                `
+            },
+
+            // Slide 3: Kürzungen (Generell) - JETZT VOR DEM AUSLAND
+            {
+                title: "Mahlzeitengestellung",
+                subtitle: "Die globale Kürzungs-Regel (§ 9 Abs. 4a Satz 8 EStG)",
+                content: `
+                    <div class="grid grid-cols-2 gap-8 h-full">
+                        <div class="col-span-2 mb-2">
+                             <p class="text-xl text-slate-600">Werden Mahlzeiten gestellt (z.B. Hotelfrühstück), muss die Pauschale gekürzt werden. Diese Prozentwerte gelten <strong>weltweit</strong>.</p>
+                        </div>
+
+                        <!-- Breakfast -->
+                        <div class="bg-orange-50 p-6 rounded-3xl border border-orange-100 flex flex-col items-center justify-center text-center shadow-sm relative overflow-hidden">
+                            <div class="absolute top-0 left-0 w-full h-2 bg-orange-400"></div>
+                            <svg data-lucide="coffee" size="64" class="text-orange-400 mb-4"></svg>
+                            <h3 class="text-3xl font-bold text-slate-800 mb-2">Frühstück</h3>
+                            <div class="text-6xl font-bold text-orange-600 my-2">- 20%</div>
+                            <p class="text-slate-500 font-bold">der vollen Tagespauschale</p>
+                            
+                            <div class="mt-4 bg-white px-6 py-2 rounded-full border border-orange-200 text-slate-600 font-mono">
+                                In DE: - 5,60 € <span class="text-xs text-slate-400">(20% von 28€)</span>
+                            </div>
+                        </div>
+
+                        <!-- Lunch/Dinner -->
+                        <div class="bg-purple-50 p-6 rounded-3xl border border-purple-100 flex flex-col items-center justify-center text-center shadow-sm relative overflow-hidden">
+                            <div class="absolute top-0 left-0 w-full h-2 bg-purple-400"></div>
+                            <svg data-lucide="utensils" size="64" class="text-purple-400 mb-4"></svg>
+                            <h3 class="text-3xl font-bold text-slate-800 mb-2">Mittag / Abend</h3>
+                            <div class="text-6xl font-bold text-purple-600 my-2">- 40%</div>
+                            <p class="text-slate-500 font-bold">der vollen Tagespauschale</p>
+                            
+                            <div class="mt-4 bg-white px-6 py-2 rounded-full border border-purple-200 text-slate-600 font-mono">
+                                In DE: - 11,20 € <span class="text-xs text-slate-400">(40% von 28€)</span>
+                            </div>
+                        </div>
+
+                        <!-- Pro Tip -->
+                        <div class="col-span-2 bg-blue-600 text-white p-5 rounded-xl flex items-center shadow-lg">
+                            <svg data-lucide="lightbulb" class="text-yellow-300 mr-4 flex-shrink-0" size="40"></svg>
+                            <div>
+                                <strong class="text-yellow-300 text-xl block mb-1">Pro-Tipp: Zuzahlungen</strong>
+                                <p class="text-blue-100 text-lg">Zahlt der Mitarbeiter einen Eigenanteil (z.B. für Kantine), mindert dieser Betrag die Kürzung!</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+
+            // Slide 4: Ausland BASICS
+            {
+                title: "Pauschalen im Ausland",
+                subtitle: "Andere Länder, andere Werte (Transfer)",
+                content: `
+                    <div class="grid grid-cols-2 gap-10 h-full items-start">
+                        
+                        <!-- Linke Seite: Regeln -->
+                        <div class="space-y-8">
+                            <div class="bg-slate-50 p-6 rounded-2xl border-l-8 border-indigo-500 shadow-sm">
+                                <h3 class="text-2xl font-bold text-slate-800 mb-2 flex items-center">
+                                    <svg data-lucide="book" class="mr-3 text-indigo-500"></svg> Die BMF-Tabelle
+                                </h3>
+                                <p class="text-xl text-slate-600">
+                                    Im Ausland gibt es keine festen 14€/28€. Jedes Land hat eigene Sätze, die das BMF jährlich veröffentlicht.
+                                </p>
+                            </div>
+
+                            <div class="bg-slate-50 p-6 rounded-2xl border-l-8 border-red-500 shadow-sm">
+                                <h3 class="text-2xl font-bold text-slate-800 mb-2 flex items-center">
+                                    <svg data-lucide="calculator" class="mr-3 text-red-500"></svg> Berechnung der Kürzung
+                                </h3>
+                                <p class="text-xl text-slate-600 mb-2">
+                                    Wir nutzen die bekannten <strong>20% / 40%</strong>, aber:
+                                </p>
+                                <p class="font-bold text-red-600 text-xl">
+                                    Die Basis ist immer die volle Pauschale des jeweiligen Landes!
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Rechte Seite: Beispiel -->
+                        <div class="bg-indigo-900 text-white p-8 rounded-3xl shadow-xl flex flex-col h-full justify-center">
+                            <h3 class="text-2xl font-bold mb-6 text-indigo-200 uppercase tracking-widest border-b border-indigo-700 pb-2">Beispiel: London</h3>
+                            
+                            <div class="flex justify-between items-end mb-8">
+                                <div>
+                                    <div class="text-indigo-300 text-sm uppercase">Pauschale (Voller Tag)</div>
+                                    <div class="text-5xl font-bold text-white">66 €</div>
+                                </div>
+                                <svg data-lucide="landmark" size="64" class="text-indigo-400 opacity-50"></svg>
+                            </div>
+
+                            <div class="space-y-4 bg-indigo-800/50 p-6 rounded-xl">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-indigo-200">Frühstück (20%)</span>
+                                    <span class="text-red-300 font-mono text-xl">- 13,20 €</span>
+                                </div>
+                                <div class="text-xs text-indigo-400 text-right">(20% von 66€, nicht von 28€!)</div>
+                                
+                                <div class="flex justify-between items-center pt-2 border-t border-indigo-700">
+                                    <span class="text-indigo-200">Mittag (40%)</span>
+                                    <span class="text-red-300 font-mono text-xl">- 26,40 €</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+
+            // Slide 5: Ausland LOGIK (Welches Land?)
+            {
+                title: "Ausland: Welches Land gilt?",
+                subtitle: "Die Logik bei Grenzübertritten (§ 9 Abs. 4a Satz 5 EStG)",
+                content: `
+                    <div class="flex flex-col h-full justify-center space-y-8">
+                        
+                        <!-- Timeline Visualisierung -->
+                        <div class="relative bg-slate-50 p-8 rounded-2xl border border-slate-200 shadow-sm">
+                            <div class="absolute top-1/2 left-0 w-full h-2 bg-slate-200 transform -translate-y-1/2 z-0"></div>
+                            
+                            <div class="relative z-10 grid grid-cols-3 gap-8">
+                                <!-- Schritt 1: Hinfahrt -->
+                                <div class="bg-white p-6 rounded-xl border-2 border-blue-500 shadow-lg text-center relative">
+                                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold">Anreise</div>
+                                    <svg data-lucide="plane-takeoff" class="mx-auto text-blue-500 mb-2" size="32"></svg>
+                                    <h4 class="font-bold text-lg mb-1">Ort um 24:00 Uhr</h4>
+                                    <p class="text-slate-500 text-sm">Wo bin ich genau um Mitternacht?</p>
+                                </div>
+
+                                <!-- Schritt 2: Zwischentage -->
+                                <div class="bg-white p-6 rounded-xl border-2 border-indigo-500 shadow-lg text-center relative">
+                                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-indigo-500 text-white px-3 py-1 rounded-full text-sm font-bold">Zwischentage</div>
+                                    <svg data-lucide="map" class="mx-auto text-indigo-500 mb-2" size="32"></svg>
+                                    <h4 class="font-bold text-lg mb-1">Ort um 24:00 Uhr</h4>
+                                    <p class="text-slate-500 text-sm">Gilt auch bei Weiterreise (z.B. Frankreich -> Belgien)</p>
+                                </div>
+
+                                <!-- Schritt 3: Rückreise -->
+                                <div class="bg-white p-6 rounded-xl border-2 border-green-500 shadow-lg text-center relative">
+                                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">Rückreise</div>
+                                    <svg data-lucide="home" class="mx-auto text-green-500 mb-2" size="32"></svg>
+                                    <h4 class="font-bold text-lg mb-1">Letzter Tätigkeitsort</h4>
+                                    <p class="text-slate-500 text-sm">Das Land, in dem ich zuletzt gearbeitet habe.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Beispiel Text -->
+                        <div class="bg-slate-800 text-white p-6 rounded-xl flex items-center shadow-lg">
+                            <div class="mr-6 bg-slate-700 p-3 rounded-full">
+                                <svg data-lucide="help-circle" size="32" class="text-yellow-400"></svg>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-yellow-400 mb-1">Beispiel Rückreise Inland:</h4>
+                                <p class="text-lg text-slate-300">
+                                    Ich fahre um 08:00 Uhr in Paris los und komme um 16:00 Uhr zuhause an.
+                                    <br>Für diesen Tag gilt die Pauschale von <strong>Frankreich</strong> (letzter Ort), obwohl ich zuhause schlafe!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+
+            // Slide 6: 3-Monats-Frist
+            {
+                title: "Die 3-Monats-Frist",
+                subtitle: "Längerfristige Tätigkeit an demselben Ort",
+                content: `
+                    <div class="grid grid-cols-1 gap-8 h-full content-center">
+                        <div class="bg-white p-8 rounded-2xl border-l-8 border-slate-300 shadow-sm flex flex-col items-center">
+                            <!-- Timeline Graphic -->
+                            <div class="relative w-full max-w-4xl h-32 flex items-center justify-between px-10">
+                                <div class="absolute top-1/2 left-0 right-0 h-4 bg-slate-100 rounded-full"></div>
+                                <div class="absolute top-1/2 left-0 w-2/3 h-4 bg-green-500 rounded-l-full"></div>
+                                
+                                <div class="relative z-10 text-center">
+                                    <div class="w-16 h-16 bg-green-600 rounded-full border-4 border-white shadow-lg flex items-center justify-center text-white font-bold text-xl">1</div>
+                                    <div class="mt-2 font-bold">Start</div>
+                                </div>
+                                <div class="relative z-10 text-center">
+                                    <div class="w-16 h-16 bg-green-600 rounded-full border-4 border-white shadow-lg flex items-center justify-center text-white font-bold text-xl">3</div>
+                                    <div class="mt-2 font-bold text-green-600">Monat 3</div>
+                                    <div class="text-xs text-green-600">Ende steuerfrei</div>
+                                </div>
+                                <div class="relative z-10 text-center">
+                                    <div class="w-16 h-16 bg-red-500 rounded-full border-4 border-white shadow-lg flex items-center justify-center text-white font-bold text-xl">4</div>
+                                    <div class="mt-2 font-bold text-red-500">Ab Monat 4</div>
+                                    <div class="text-xs text-red-500">Steuerpflichtig</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-100 p-8 rounded-2xl flex items-start border border-slate-200">
+                            <svg data-lucide="refresh-cw" class="mr-6 text-orange-500 flex-shrink-0" size="48"></svg>
+                            <div>
+                                <h3 class="font-bold text-2xl mb-2 text-slate-800">Der "Reset" (Satz 7)</h3>
+                                <p class="text-xl text-slate-700">
+                                    Wird die Tätigkeit für <strong>mindestens 4 Wochen</strong> unterbrochen, beginnt die Frist von vorne.
+                                    Der Grund (Urlaub, Krankheit, andere Baustelle) ist dabei egal.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+
+            // Slide 7: Jahreswechsel
+            {
+                title: "Jahresübergreifende Tätigkeit",
+                subtitle: "Der Kalender spielt keine Rolle",
+                content: `
+                    <div class="flex flex-row gap-8 h-full items-center">
+                        <!-- Left Side: The Mistake -->
+                        <div class="w-1/3 bg-red-50 p-8 rounded-3xl border-2 border-red-100 relative flex flex-col justify-center h-4/5">
+                            <div class="absolute -top-5 -right-5 bg-red-500 text-white px-6 py-2 rounded-full font-bold shadow-lg transform rotate-6 text-xl">Falsch!</div>
+                            <p class="text-3xl font-serif text-center italic text-red-900/60 leading-relaxed">
+                                "Neues Jahr <br>=<br> Neue 3 Monate?"
+                            </p>
+                        </div>
+
+                        <!-- Right Side: The Truth -->
+                        <div class="w-2/3 bg-slate-800 text-white p-10 rounded-3xl shadow-2xl flex flex-col justify-center h-full">
+                           <h3 class="text-2xl font-bold mb-6 text-blue-300 border-b border-slate-600 pb-2">Beispiel: Start 01. November</h3>
+                           
+                           <div class="grid grid-cols-3 gap-4 text-center">
+                             <!-- Nov/Dec -->
+                             <div class="bg-slate-700 p-4 rounded-xl">
+                               <div class="text-slate-400 text-sm uppercase tracking-wide mb-1">Jahr 1</div>
+                               <div class="text-xl font-bold mb-2">Nov + Dez</div>
+                               <div class="bg-green-500/20 text-green-400 py-1 rounded font-bold">Pauschale JA</div>
+                             </div>
+
+                             <!-- Jan -->
+                             <div class="bg-slate-700 p-4 rounded-xl relative overflow-hidden">
+                               <div class="absolute top-0 right-0 w-3 h-3 bg-yellow-400 rounded-bl-full"></div> <!-- Helper mark -->
+                               <div class="text-slate-400 text-sm uppercase tracking-wide mb-1">Jahr 2</div>
+                               <div class="text-xl font-bold mb-2">Januar</div>
+                               <div class="bg-green-500/20 text-green-400 py-1 rounded font-bold">Pauschale JA</div>
+                             </div>
+
+                             <!-- Feb -->
+                             <div class="bg-red-900/20 border border-red-500/30 p-4 rounded-xl">
+                               <div class="text-red-400/50 text-sm uppercase tracking-wide mb-1">Jahr 2</div>
+                               <div class="text-xl font-bold text-red-200 mb-2">Ab Februar</div>
+                               <div class="bg-red-500/20 text-red-400 py-1 rounded font-bold">Pauschale NEIN</div>
+                             </div>
+                           </div>
+
+                           <div class="mt-8 flex items-start bg-slate-700/50 p-4 rounded-lg">
+                                <svg data-lucide="info" class="text-blue-400 mr-3 flex-shrink-0 mt-1"></svg>
+                                <p class="text-slate-300">Der Jahreswechsel (01.01.) unterbricht die Frist <strong>nicht</strong>. Sie läuft einfach kalenderübergreifend weiter.</p>
+                           </div>
+                        </div>
+                    </div>
+                `
+            },
+
+            // Slide 8: Beispielrechnung
+            {
+                title: "Beispielrechnung (Inland)",
+                subtitle: "Zusammenfassung des Gelernten",
+                content: `
+                    <div class="bg-white border border-slate-200 shadow-2xl rounded-2xl p-8 h-full flex flex-col">
+                        <div class="flex items-center justify-between border-b pb-6 mb-6">
+                            <div>
+                                <h3 class="font-bold text-2xl text-slate-800">Szenario:</h3>
+                                <p class="text-xl text-slate-500">Mo-Mi, Hotel inkl. Frühstück (vom AG bezahlt)</p>
+                            </div>
+                            <div class="bg-slate-100 px-4 py-2 rounded text-slate-600 font-mono text-sm">Inland</div>
+                        </div>
+
+                        <div class="flex-grow space-y-4 overflow-y-auto pr-2">
+                            <!-- Tag 1 -->
+                            <div class="flex justify-between items-center bg-slate-50 p-5 rounded-xl border-l-4 border-blue-400">
+                                <div>
+                                    <span class="font-bold text-xl block text-slate-800">Montag (Anreise)</span>
+                                    <span class="text-slate-500">Pauschale Anreisetag (kein Frühstück)</span>
+                                </div>
+                                <div class="font-mono text-3xl font-bold text-slate-700">14,00 €</div>
+                            </div>
+
+                            <!-- Tag 2 -->
+                            <div class="flex justify-between items-center bg-slate-50 p-5 rounded-xl border-l-4 border-green-500">
+                                <div>
+                                    <span class="font-bold text-xl block text-slate-800">Dienstag (Voller Tag)</span>
+                                    <span class="text-slate-500">28,00 € <span class="text-red-500 font-bold">./. Frühstück (5,60 €)</span></span>
+                                </div>
+                                <div class="font-mono text-3xl font-bold text-slate-700">22,40 €</div>
+                            </div>
+
+                            <!-- Tag 3 -->
+                            <div class="flex justify-between items-center bg-slate-50 p-5 rounded-xl border-l-4 border-blue-400">
+                                <div>
+                                    <span class="font-bold text-xl block text-slate-800">Mittwoch (Abreise)</span>
+                                    <span class="text-slate-500">14,00 € <span class="text-red-500 font-bold">./. Frühstück (5,60 €)</span></span>
+                                </div>
+                                <div class="font-mono text-3xl font-bold text-slate-700">8,40 €</div>
+                            </div>
+                        </div>
+
+                        <div class="border-t-4 border-slate-800 pt-6 mt-4 flex justify-between items-center bg-white z-10">
+                            <span class="font-bold text-3xl text-slate-900">Gesamtansatz:</span>
+                            <span class="font-bold text-5xl text-green-600">44,80 €</span>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        function renderSlide() {
+            const slideData = slides[currentSlide];
+            const container = document.getElementById('slide-container');
+
+            const html = `
+                <div class="flex flex-col h-full">
+                    <!-- Header -->
+                    <div class="px-10 pt-8 pb-4 bg-white flex-shrink-0 z-20 flex flex-col justify-center border-b border-slate-100">
+                        <div class="flex items-center">
+                            <div class="h-12 w-2 bg-blue-600 rounded-full mr-4"></div>
+                            <div>
+                                <h2 class="text-4xl font-bold text-slate-900 tracking-tight leading-none">${slideData.title}</h2>
+                                ${slideData.subtitle ? `<p class="text-xl text-slate-500 mt-2 font-medium">${slideData.subtitle}</p>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Content -->
+                    <div class="flex-grow p-10 bg-white overflow-hidden">
+                        ${slideData.content}
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+
+            document.getElementById('slide-info').textContent = `Folie ${currentSlide + 1} / ${slides.length}`;
+            document.getElementById('prev-button').disabled = currentSlide === 0;
+            document.getElementById('next-button').disabled = currentSlide === slides.length - 1;
+
+            if (window.initIcons) {
+                window.initIcons();
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                renderSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                renderSlide();
+            }
+        }
+
+        window.nextSlide = nextSlide;
+        window.prevSlide = prevSlide;
+
+        document.addEventListener('DOMContentLoaded', renderSlide);
+    </script>
+</body>
+</html>
