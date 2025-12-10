@@ -67,9 +67,9 @@
                             <div class="grid grid-cols-2 gap-6 text-left">
                                 <ul class="bg-slate-50 p-8 rounded-xl shadow-sm border border-slate-100 space-y-4 text-2xl">
                                     <li class="font-bold text-slate-400 uppercase text-sm tracking-wider mb-2">Grundlagen</li>
-                                    <li class="flex items-center"><svg data-lucide="check-circle" size="28" class="text-green-500 mr-4"></svg> Voraussetzung: Auswärtstätigkeit</li>
+                                    <li class="flex items-center"><svg data-lucide="alert-octagon" size="28" class="text-red-500 mr-4"></svg> Das Verbot (§ 3c EStG)</li>
                                     <li class="flex items-center"><svg data-lucide="check-circle" size="28" class="text-green-500 mr-4"></svg> Die Pauschalen (Inland)</li>
-                                    <li class="flex items-center"><svg data-lucide="check-circle" size="28" class="text-green-500 mr-4"></svg> <strong></strong> Mahlzeitenkürzung</li>
+                                    <li class="flex items-center"><svg data-lucide="check-circle" size="28" class="text-green-500 mr-4"></svg> Mahlzeitenkürzung</li>
                                 </ul>
                                 <ul class="bg-blue-50 p-8 rounded-xl shadow-sm border border-blue-100 space-y-4 text-2xl">
                                     <li class="font-bold text-blue-400 uppercase text-sm tracking-wider mb-2">Vertiefung</li>
@@ -82,7 +82,74 @@
                 `
             },
 
-            // Slide 2: Die Pauschalen INLAND (Basis)
+            // Slide 2: § 3c EStG (NEU)
+            {
+                title: "Das Grundprinzip (§ 3c EStG)",
+                subtitle: "Verbot der Doppelbegünstigung",
+                content: `
+                    <div class="flex flex-col h-full justify-center space-y-8">
+                        
+                        <!-- Law Box -->
+                        <div class="bg-slate-100 p-6 rounded-xl border-l-8 border-slate-800 shadow-sm">
+                            <h3 class="text-xl font-bold text-slate-800 mb-2 flex items-center">
+                                <svg data-lucide="scale" class="mr-3 text-slate-600"></svg> § 3c Abs. 1 EStG (Vereinfacht)
+                            </h3>
+                            <p class="text-2xl text-slate-700 font-serif italic">
+                                "Ausgaben dürfen nicht als Werbungskosten abgezogen werden, soweit sie im Zusammenhang mit steuerfreien Einnahmen stehen."
+                            </p>
+                        </div>
+
+                        <!-- Visual Equation -->
+                        <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-xl flex items-center justify-between relative overflow-hidden">
+                            <!-- Background Arrow -->
+                            <div class="absolute top-1/2 left-10 right-10 h-2 bg-slate-100 -z-10 rounded-full"></div>
+
+                            <!-- Step 1: Anspruch -->
+                            <div class="text-center bg-white p-4 z-10">
+                                <div class="text-sm uppercase font-bold text-slate-400 mb-2">Schritt 1: Ermittlung</div>
+                                <div class="text-5xl font-bold text-blue-600 mb-2">28 €</div>
+                                <div class="text-slate-600 font-medium">Reisekosten-Pauschale<br>(§ 9 Abs. 4a EStG)</div>
+                            </div>
+
+                            <!-- Minus -->
+                            <div class="bg-white z-10 p-2 rounded-full border border-slate-200">
+                                <svg data-lucide="minus" size="40" class="text-slate-400"></svg>
+                            </div>
+
+                            <!-- Step 2: Erstattung -->
+                            <div class="text-center bg-white p-4 z-10 border-2 border-green-100 rounded-xl">
+                                <div class="text-sm uppercase font-bold text-green-600 mb-2">Erstattung AG</div>
+                                <div class="text-5xl font-bold text-green-600 mb-2">28 €</div>
+                                <div class="text-slate-600 font-medium">Steuerfrei erhalten<br>(§ 3 Nr. 13/16 EStG)</div>
+                            </div>
+
+                            <!-- Equals -->
+                            <div class="bg-white z-10 p-2 rounded-full border border-slate-200">
+                                <svg data-lucide="equal" size="40" class="text-slate-800"></svg>
+                            </div>
+
+                            <!-- Step 3: Ergebnis -->
+                            <div class="text-center bg-white p-4 z-10 border-2 border-red-100 rounded-xl shadow-inner bg-red-50">
+                                <div class="text-sm uppercase font-bold text-red-500 mb-2">Werbungskosten</div>
+                                <div class="text-5xl font-bold text-red-600 mb-2">0 €</div>
+                                <div class="text-slate-600 font-medium">Ansatz in Steuererklärung<br>Anlage N</div>
+                            </div>
+                        </div>
+
+                        <!-- Summary -->
+                        <div class="flex items-start bg-blue-50 p-4 rounded-lg text-blue-900">
+                            <svg data-lucide="info" class="mr-3 mt-1 flex-shrink-0" size="24"></svg>
+                            <p class="text-lg">
+                                <strong>Fazit für diesen Vortrag:</strong> Wir berechnen hier die <em>gesetzlichen Pauschalen</em>. 
+                                Ob diese am Ende vom Chef ausgezahlt werden oder in der Steuererklärung landen, hängt davon ab, wer zahlt. 
+                                <br>Man darf nie <strong>beides</strong> gleichzeitig für denselben Euro nutzen!
+                            </p>
+                        </div>
+                    </div>
+                `
+            },
+
+            // Slide 3: Die Pauschalen INLAND
             {
                 title: "Die Pauschalen (Inland)",
                 subtitle: "Die festen Werte für Deutschland",
@@ -126,7 +193,7 @@
                 `
             },
 
-            // Slide 3: Kürzungen (Generell) - UPDATE: 3 SPALTEN
+            // Slide 4: Kürzungen (3 Spalten)
             {
                 title: "Mahlzeitengestellung",
                 subtitle: "Die globale Kürzungs-Regel (§ 9 Abs. 4a Satz 8 EStG)",
@@ -184,7 +251,7 @@
                 `
             },
 
-            // Slide 4: Ausland BASICS
+            // Slide 5: Ausland BASICS
             {
                 title: "Pauschalen im Ausland",
                 subtitle: "Andere Länder, andere Werte (Transfer)",
@@ -244,7 +311,7 @@
                 `
             },
 
-            // Slide 5: Ausland LOGIK (Welches Land?)
+            // Slide 6: Ausland LOGIK (Welches Land?)
             {
                 title: "Ausland: Welches Land gilt?",
                 subtitle: "Die Logik bei Grenzübertritten (§ 9 Abs. 4a Satz 5 EStG)",
@@ -299,7 +366,7 @@
                 `
             },
 
-            // Slide 6: 3-Monats-Frist - UPDATE: WORDING "ABZIEHBAR"
+            // Slide 7: 3-Monats-Frist
             {
                 title: "Die 3-Monats-Frist",
                 subtitle: "Längerfristige Tätigkeit an demselben Ort",
@@ -342,7 +409,7 @@
                 `
             },
 
-            // Slide 7: Jahreswechsel
+            // Slide 8: Jahreswechsel
             {
                 title: "Jahresübergreifende Tätigkeit",
                 subtitle: "Der Kalender spielt keine Rolle",
@@ -393,7 +460,7 @@
                 `
             },
 
-            // Slide 8: Beispielrechnung
+            // Slide 9: Beispielrechnung
             {
                 title: "Beispielrechnung (Inland)",
                 subtitle: "Zusammenfassung des Gelernten",
@@ -439,6 +506,69 @@
                         <div class="border-t-4 border-slate-800 pt-6 mt-4 flex justify-between items-center bg-white z-10">
                             <span class="font-bold text-3xl text-slate-900">Gesamtansatz:</span>
                             <span class="font-bold text-5xl text-green-600">44,80 €</span>
+                        </div>
+                    </div>
+                `
+            },
+
+            // Slide 10: Quellenverzeichnis (NEU)
+            {
+                title: "Rechtsquellen & Fundstellen",
+                subtitle: "Zum Nachschlagen",
+                content: `
+                    <div class="grid grid-cols-2 gap-8 h-full">
+                        
+                        <!-- Spalte 1: Gesetz (EStG) -->
+                        <div class="bg-slate-50 p-8 rounded-2xl border-t-8 border-slate-800 shadow-sm flex flex-col">
+                            <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center border-b pb-4">
+                                <svg data-lucide="scale" class="mr-4 text-slate-600"></svg> Einkommensteuergesetz (EStG)
+                            </h3>
+                            <ul class="space-y-6 flex-grow">
+                                <li class="flex items-start">
+                                    <span class="font-mono font-bold bg-slate-200 px-2 py-1 rounded text-slate-700 mr-4">§ 9 Abs. 4a</span>
+                                    <div>
+                                        <strong class="block text-slate-900">Verpflegungsmehraufwand</strong>
+                                        <span class="text-slate-500">Satz 3 (Pauschalen), Satz 5 (Ausland), Satz 8 (Kürzung Mahlzeiten)</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="font-mono font-bold bg-slate-200 px-2 py-1 rounded text-slate-700 mr-4">§ 3 Nr. 13/16</span>
+                                    <div>
+                                        <strong class="block text-slate-900">Steuerfreiheit</strong>
+                                        <span class="text-slate-500">Regelung für Erstattungen durch den Arbeitgeber (Reisekosten / Trennungsgeld)</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="font-mono font-bold bg-slate-200 px-2 py-1 rounded text-slate-700 mr-4">§ 3c Abs. 1</span>
+                                    <div>
+                                        <strong class="block text-slate-900">Abzugsverbot</strong>
+                                        <span class="text-slate-500">Kein Werbungskostenabzug bei steuerfreier Erstattung</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Spalte 2: Richtlinien & BMF -->
+                        <div class="bg-blue-50 p-8 rounded-2xl border-t-8 border-blue-600 shadow-sm flex flex-col">
+                            <h3 class="text-2xl font-bold text-blue-900 mb-6 flex items-center border-b border-blue-200 pb-4">
+                                <svg data-lucide="file-text" class="mr-4 text-blue-600"></svg> Verwaltung & Richtlinien
+                            </h3>
+                            <ul class="space-y-6 flex-grow">
+                                <li class="flex items-start">
+                                    <span class="font-mono font-bold bg-white px-2 py-1 rounded text-blue-700 border border-blue-200 mr-4">LStR R 9.6</span>
+                                    <div>
+                                        <strong class="block text-blue-900">Lohnsteuer-Richtlinie</strong>
+                                        <span class="text-blue-700/70">Details zur Mahlzeitengestellung und Berechnung der Kürzungen</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="font-mono font-bold bg-white px-2 py-1 rounded text-blue-700 border border-blue-200 mr-4">BMF</span>
+                                    <div>
+                                        <strong class="block text-blue-900">Jährliches BMF-Schreiben</strong>
+                                        <span class="text-blue-700/70">"Steuerliche Behandlung von Reisekosten" <br>(Veröffentlicht die aktuellen Pauschalen für Ausland)</span>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 `
